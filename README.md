@@ -69,7 +69,6 @@ mongodb-nosql-exam/
 
 ## 🎓 Informações do Teste
 
-- **Duração:** 2 horas
 - **Questões:** 5 (valor: 20 pontos cada)
 - **Total:** 100 pontos
 - **Tipo:** Prático individual
