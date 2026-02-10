@@ -2,10 +2,7 @@
 
 **Curso:** Pós-Graduação/MBA em Big Data  
 **Disciplina:** Sistemas de Bancos de Dados NoSQL  
-**Professor:** _________________________  
-**Data:** ___/___/______  
-**Duração:** 2 horas  
-
+**Professor:** Leivio Fontenele 
 ---
 
 ## IDENTIFICAÇÃO DO ALUNO
@@ -33,7 +30,7 @@
 
 ## QUESTÕES
 
-### QUESTÃO 1 (10 pontos) - Consulta Básica com Filtros
+### QUESTÃO 1 (20 pontos) - Consulta Básica com Filtros
 
 Encontre todos os filmes do gênero **"Drama"** lançados entre **2010 e 2015** que tenham uma classificação IMDB (`imdb.rating`) superior a **7.5**. 
 
@@ -49,7 +46,7 @@ Encontre todos os filmes do gênero **"Drama"** lançados entre **2010 e 2015** 
 
 ---
 
-### QUESTÃO 2 (10 pontos) - Agregação com Agrupamento
+### QUESTÃO 2 (20 pontos) - Agregação com Agrupamento
 
 Calcule a quantidade total de filmes por país (campo `countries`). Mostre os **10 países** com maior produção cinematográfica.
 
@@ -66,7 +63,7 @@ Calcule a quantidade total de filmes por país (campo `countries`). Mostre os **
 
 ---
 
-### QUESTÃO 3 (10 pontos) - Pipeline com $unwind e $group
+### QUESTÃO 3 (20 pontos) - Pipeline com $unwind e $group
 
 Identifique os **5 atores** (campo `cast`) que mais aparecem em filmes da base. Para cada ator, mostre:
 - Nome do ator
@@ -85,7 +82,7 @@ Identifique os **5 atores** (campo `cast`) que mais aparecem em filmes da base. 
 
 ---
 
-### QUESTÃO 4 (10 pontos) - Agregação com $lookup
+### QUESTÃO 4 (20 pontos) - Agregação com $lookup
 
 Crie uma pipeline que combine dados das collections `movies` e `comments`. Para os **5 filmes com mais comentários**, mostre:
 - Título do filme
@@ -105,49 +102,7 @@ Crie uma pipeline que combine dados das collections `movies` e `comments`. Para 
 
 ---
 
-### QUESTÃO 5 (10 pontos) - Análise Temporal
-
-Analise a evolução da produção cinematográfica por década. Agrupe os filmes por década:
-- 1980-1989
-- 1990-1999
-- 2000-2009
-- 2010-2019
-
-Para cada década, calcule:
-- Quantidade total de filmes
-- Rating médio do IMDB (arredondado para 2 casas decimais)
-- Maior rating registrado
-
-**Requisitos:**
-- Use expressões condicionais ou bucket para agrupar por década
-- Considere apenas filmes com rating definido
-- Ordene cronologicamente (década mais antiga primeiro)
-
-**Entregue:**
-- [ ] Pipeline de agregação
-- [ ] Tabela comparativa das décadas
-- [ ] Breve análise: qual década teve melhor qualidade média?
-
----
-
-### QUESTÃO 6 (10 pontos) - Filtros Complexos com Arrays
-
-Encontre filmes que tenham **Tom Hanks E Robin Wright** no elenco (campo `cast`) **simultaneamente**.
-
-**Requisitos:**
-- Retorne: título, ano, elenco completo e rating
-- Use operadores apropriados para busca em arrays
-- Ordene por ano de lançamento
-
-**Entregue:**
-- [ ] Query utilizada
-- [ ] Quantidade de filmes encontrados
-- [ ] Lista completa dos filmes (título e ano)
-- [ ] Screenshot de pelo menos 1 filme completo
-
----
-
-### QUESTÃO 7 (10 pontos) - Agregação com Múltiplos Estágios
+### QUESTÃO 5 (20 pontos) - Agregação com Múltiplos Estágios
 
 Crie uma pipeline que identifique os gêneros mais **"subestimados"** - aqueles que têm poucos filmes mas alta qualidade.
 
@@ -169,85 +124,17 @@ Crie uma pipeline que identifique os gêneros mais **"subestimados"** - aqueles 
 
 ---
 
-### QUESTÃO 8 (10 pontos) - Análise de Comentários
-
-Usando a collection `comments`, identifique os **5 usuários mais ativos** (que fizeram mais comentários).
-
-Para cada usuário, mostre:
-- Nome do usuário (`name`)
-- Email
-- Total de comentários
-- Data do primeiro comentário
-- Data do último comentário
-
-**Requisitos:**
-- Agrupe por email do usuário
-- Use operadores de agregação para min/max de datas
-- Ordene pela quantidade de comentários (decrescente)
-
-**Entregue:**
-- [ ] Pipeline de agregação
-- [ ] Tabela com os 5 usuários mais ativos
-- [ ] Screenshot do resultado
-
----
-
-### QUESTÃO 9 (10 pontos) - Pipeline com Expressões Condicionais
-
-Classifique os filmes em categorias baseadas no rating IMDB:
-- **"Excelente"**: rating >= 8.0
-- **"Bom"**: rating >= 6.0 e < 8.0
-- **"Regular"**: rating >= 4.0 e < 6.0
-- **"Fraco"**: rating < 4.0
-
-**Requisitos:**
-- Mostre quantos filmes existem em cada categoria
-- Calcule o rating médio de cada categoria (2 casas decimais)
-- Considere apenas filmes que tenham rating definido
-- Use $switch ou $cond para classificação
-
-**Entregue:**
-- [ ] Pipeline com expressões condicionais
-- [ ] Tabela com as 4 categorias e suas estatísticas
-- [ ] Screenshot do resultado
-- [ ] Qual categoria tem mais filmes?
-
----
-
-### QUESTÃO 10 (10 pontos) - Pipeline Avançada Combinada
-
-Crie uma análise que mostre, para cada **diretor que tenha dirigido pelo menos 5 filmes**:
-- Nome do diretor
-- Quantidade de filmes dirigidos
-- Rating médio dos seus filmes (2 casas decimais)
-- Seu filme com **maior rating** (título e rating)
-- Gêneros mais frequentes nos seus filmes (**top 3**)
-
-**Requisitos:**
-- Use $unwind para diretores
-- Filtre diretores com mínimo de 5 filmes
-- Ordene pelos diretores com maior rating médio
-- Limite aos 10 melhores diretores
-
-**Entregue:**
-- [ ] Pipeline completa (pode ser complexa, comente as etapas)
-- [ ] Lista dos 5 primeiros diretores
-- [ ] Screenshot de pelo menos 2 diretores com detalhes completos
-- [ ] Breve explicação da estratégia utilizada
-
----
-
 ## CRITÉRIOS DE AVALIAÇÃO
 
 Para cada questão será avaliado:
 
 | Critério | Pontos | Descrição |
 |----------|--------|-----------|
-| **Sintaxe e Execução** | 4 | Query/pipeline sintaticamente correta e executável |
-| **Resultado Correto** | 4 | Resposta atende aos requisitos e está correta |
-| **Organização** | 2 | Código legível, bem formatado e comentado |
+| **Sintaxe e Execução** | 8 | Query/pipeline sintaticamente correta e executável |
+| **Resultado Correto** | 8 | Resposta atende aos requisitos e está correta |
+| **Organização** | 4 | Código legível, bem formatado e comentado |
 
-**Pontuação Final:** Soma das 10 questões = **100 pontos**
+**Pontuação Final:** Soma das 5 questões = **100 pontos**
 
 ---
 
