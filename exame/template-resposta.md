@@ -14,21 +14,64 @@
 ### Comando Utilizado
 ```javascript
 // Cole aqui seu comando find()
+find com filtros + projection + sort + limit
+db.movies.find(
+  {
+    genres: "Drama",
+    year: { $gte: 2010, $lte: 2015 },
+    "imdb.rating": { $gt: 7.5 }
+  },
+  {
+    _id: 0,
+    title: 1,
+    year: 1,
+    "imdb.rating": 1,
+    genres: 1
+  }
+)
+.sort({ "imdb.rating": -1 })
+.limit(20)
 
+Quantidade de documentos encontrados (no shell):
+db.movies.countDocuments({
+  genres: "Drama",
+  year: { $gte: 2010, $lte: 2015 },
+  "imdb.rating": { $gt: 7.5 }
+})
+
+Código para print dos 5 primeiros
+db.movies.find(
+  {
+    genres: "Drama",
+    year: { $gte: 2010, $lte: 2015 },
+    "imdb.rating": { $gt: 7.5 }
+  },
+  {
+    _id: 0,
+    title: 1,
+    year: 1,
+    "imdb.rating": 1,
+    genres: 1
+  }
+)
+.sort({ "imdb.rating": -1 })
+.limit(5)
 
 ```
 
 ### Resultado Obtido
-- **Quantidade de documentos encontrados:** ______
+- **Quantidade de documentos encontrados:** 352
 - **5 primeiros filmes (título e rating):**
-  1. 
-  2. 
-  3. 
-  4. 
-  5. 
+  1. title: 'Most Likely to Succeed',  rating: 8.9
+  2. title: 'Drishyam',  rating: 8.9
+  3. title: 'Killswitch', rating: 8.8
+  4. title: 'Kaakkaa Muttai', rating: 8.8
+  5. title: 'The Great Alone', rating: 8.7
 
 ### Screenshot
 _[Anexar screenshot ou indicar arquivo: questao01.png]_
+
+
 
 ### Observações (opcional)
 
