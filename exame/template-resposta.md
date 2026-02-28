@@ -137,7 +137,27 @@ _[Anexar screenshot ou indicar arquivo: questao02.png]_
 ```javascript
 // Cole aqui sua pipeline de agregação
 db.movies.aggregate([
-
+db.movies.aggregate([
+  { $match: { "imdb.rating": { $ne: null } } },
+  { $unwind: "$cast" },
+  {
+    $group: {
+      _id: "$cast",
+      quantidadeFilmes: { $sum: 1 },
+      mediaRating: { $avg: "$imdb.rating" }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      ator: "$_id",
+      quantidadeFilmes: 1,
+      mediaRating: { $round: ["$mediaRating", 2] }
+    }
+  },
+  { $sort: { quantidadeFilmes: -1 } },
+  { $limit: 5 }
+])
 
 ])
 ```
@@ -146,11 +166,11 @@ db.movies.aggregate([
 
 | Posição | Ator | Qtd Filmes | Rating Médio |
 |---------|------|------------|--------------|
-| 1º | | | |
-| 2º | | | |
-| 3º | | | |
-| 4º | | | |
-| 5º | | | |
+| 1º | Gèrard Depardieu | 67 | 6.69 |
+| 2º | Robert De Niro | 58 | 6.96 |
+| 3º | Michael Caine | 51 | 6.71 |
+| 4º | Bruce Willis | 49 | 6.41 |
+| 5º | Samuel L. Jackson | 48 | 6.4 |
 
 ### Screenshot
 _[Anexar screenshot ou indicar arquivo: questao03.png]_
