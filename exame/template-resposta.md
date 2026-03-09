@@ -121,30 +121,37 @@ O pipeline considera apenas filmes com informação válida no campo countries, 
 ### Pipeline Utilizada
 ```javascript
 // Cole aqui sua pipeline de agregação
-db.movies.aggregate([
-db.movies.aggregate([
-  { $match: { "imdb.rating": { $ne: null } } },
-  { $unwind: "$cast" },
-  {
-    $group: {
-      _id: "$cast",
-      quantidadeFilmes: { $sum: 1 },
-      mediaRating: { $avg: "$imdb.rating" }
-    }
-  },
-  {
-    $project: {
-      _id: 0,
-      ator: "$_id",
-      quantidadeFilmes: 1,
-      mediaRating: { $round: ["$mediaRating", 2] }
-    }
-  },
-  { $sort: { quantidadeFilmes: -1 } },
-  { $limit: 5 }
-])
-
-])
+[
+{
+$match: {
+"imdb.rating": { $ne: null }
+}
+},
+{
+$unwind: "$cast"
+},
+{
+$group: {
+_id: "$cast",
+quantidadeFilmes: { $sum: 1 },
+mediaRating: { $avg: "$imdb.rating" }
+}
+},
+{
+$project: {
+_id: 0,
+ator: "$_id",
+quantidadeFilmes: 1,
+mediaRating: { $round: ["$mediaRating", 2] }
+}
+},
+{
+$sort: { quantidadeFilmes: -1 }
+},
+{
+$limit: 5
+}
+]
 ```
 
 ### Resultado Obtido
@@ -161,7 +168,7 @@ db.movies.aggregate([
 _[Anexar screenshot ou indicar arquivo: questao03.png]_
 
 ### Observações (opcional)
-
+O pipeline considera apenas filmes com classificação IMDb definida, utiliza $unwind para separar os atores do campo cast, agrupa por ator para calcular a quantidade de filmes e a média das classificações, arredonda a média para duas casas decimais e limita o resultado aos 5 atores com maior número de participações.
 
 ---
 
