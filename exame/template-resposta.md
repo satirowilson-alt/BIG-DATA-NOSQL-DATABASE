@@ -13,9 +13,7 @@
 
 ### Comando Utilizado
 ```javascript
-// Cole aqui seu comando find()
-find com filtros + projection + sort + limit
-db.movies.find(
+// Cole aqui seu comando find(db.movies.find(
   {
     genres: "Drama",
     year: { $gte: 2010, $lte: 2015 },
@@ -30,32 +28,8 @@ db.movies.find(
   }
 )
 .sort({ "imdb.rating": -1 })
-.limit(20)
+.limit(20))
 
-Quantidade de documentos encontrados (no shell):
-db.movies.countDocuments({
-  genres: "Drama",
-  year: { $gte: 2010, $lte: 2015 },
-  "imdb.rating": { $gt: 7.5 }
-})
-
-Código para print dos 5 primeiros
-db.movies.find(
-  {
-    genres: "Drama",
-    year: { $gte: 2010, $lte: 2015 },
-    "imdb.rating": { $gt: 7.5 }
-  },
-  {
-    _id: 0,
-    title: 1,
-    year: 1,
-    "imdb.rating": 1,
-    genres: 1
-  }
-)
-.sort({ "imdb.rating": -1 })
-.limit(5)
 
 ```
 
@@ -74,7 +48,7 @@ _[Anexar screenshot ou indicar arquivo: questao01.png]_
 
 
 ### Observações (opcional)
-
+A consulta utilizou filtro por gênero, intervalo de anos e classificação IMDb, com projeção dos campos solicitados, ordenação decrescente por rating e limitação aos 20 primeiros resultados.
 
 ---
 
