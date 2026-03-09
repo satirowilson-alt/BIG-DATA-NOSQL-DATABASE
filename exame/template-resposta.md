@@ -268,7 +268,46 @@ _[Anexar screenshot ou indicar arquivo: questao04.png]_
 ### Pipeline Utilizada
 ```javascript
 // Cole aqui sua pipeline completa
-db.movies.aggregate([
+db.movies.aggregate([[
+{
+$match: {
+"imdb.rating": { $ne: null },
+genres: { $exists: true, $ne: [] }
+}
+},
+{
+$unwind: "$genres"
+},
+{
+$match: {
+genres: { $ne: null, $ne: "" }
+}
+},
+{
+$group: {
+_id: "$genres",
+quantidadeFilmes: { $sum: 1 },
+mediaRating: { $avg: "$imdb.rating" }
+}
+},
+{
+$match: {
+quantidadeFilmes: { $gte: 10, $lte: 50 },
+mediaRating: { $gt: 7.0 }
+}
+},
+{
+$project: {
+_id: 0,
+genero: "$_id",
+quantidadeFilmes: 1,
+mediaRating: { $round: ["$mediaRating", 2] }
+}
+},
+{
+$sort: { mediaRating: -1 }
+}
+]
 
 
 ])
@@ -277,7 +316,7 @@ db.movies.aggregate([
 ### Resultado Obtido
 
 | Gênero | Qtd Filmes | Rating Médio |
-|--------|------------|--------------|
+| News   |    44      | 7.25         |
 | | | |
 | | | |
 | | | |
@@ -285,7 +324,7 @@ db.movies.aggregate([
 
 ### Explicação
 **Por que esses gêneros são considerados subestimados?**
-
+O gênero "News" pode ser considerado subestimado porque possui uma quantidade relativamente pequena de filmes na base analisada (44 filmes), mas apresenta uma classificação média elevada (7.25). Isso indica que, embora haja poucas produções nesse gênero, os filmes tendem a ter boa qualidade segundo as avaliações do IMDb.
 
 ### Screenshot
 _[Anexar screenshot ou indicar arquivo: questao07.png]_
