@@ -57,29 +57,40 @@ A consulta utilizou filtro por gênero, intervalo de anos e classificação IMDb
 ### Pipeline Utilizada
 ```javascript
 // Cole aqui sua pipeline de agregação
-db.movies.aggregate([
-db.movies.aggregate([
-  { $match: { countries: { $exists: true, $ne: [], $type: "array" } } },
-  { $unwind: "$countries" },
-  { $match: { countries: { $ne: null, $ne: "" } } },
-  {
-    $group: {
-      _id: "$countries",
-      totalFilmes: { $sum: 1 }
-    }
-  },
-  { $sort: { totalFilmes: -1 } },
-  { $limit: 10 },
-  {
-    $project: {
-      _id: 0,
-      pais: "$_id",
-      totalFilmes: 1
-    }
-  }
-])
-
-])
+[
+{
+$match: {
+countries: { $exists: true, $type: "array", $ne: [] }
+}
+},
+{
+$unwind: "$countries"
+},
+{
+$match: {
+countries: { $ne: null, $ne: "" }
+}
+},
+{
+$group: {
+_id: "$countries",
+quantidadeFilmes: { $sum: 1 }
+}
+},
+{
+$sort: { quantidadeFilmes: -1 }
+},
+{
+$limit: 10
+},
+{
+$project: {
+_id: 0,
+pais: "$_id",
+quantidadeFilmes: 1
+}
+}
+]
 ```
 
 ### Resultado Obtido
@@ -101,7 +112,7 @@ db.movies.aggregate([
 _[Anexar screenshot ou indicar arquivo: questao02.png]_
 
 ### Observações (opcional)
-
+O pipeline considera apenas filmes com informação válida no campo countries, utiliza $unwind para separar os países dos filmes com múltiplas nacionalidades, agrupa os registros por país, ordena pela quantidade de filmes em ordem decrescente e limita o resultado aos 10 países com maior produção.
 
 ---
 
