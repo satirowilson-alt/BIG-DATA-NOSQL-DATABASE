@@ -185,7 +185,52 @@ _[Anexar screenshot ou indicar arquivo: questao03.png]_
 ### Pipeline Utilizada
 ```javascript
 // Cole aqui sua pipeline com $lookup
-db.movies.aggregate([
+db.movies.aggregate([[
+{
+$group: {
+_id: "$movie_id",
+quantidadeComentarios: { $sum: 1 },
+primeiros3Usuarios: {
+$push: {
+name: "$name",
+email: "$email"
+}
+}
+}
+},
+{
+$project: {
+quantidadeComentarios: 1,
+primeiros3Usuarios: { $slice: ["$primeiros3Usuarios", 3] }
+}
+},
+{
+$sort: { quantidadeComentarios: -1 }
+},
+{
+$limit: 5
+},
+{
+$lookup: {
+from: "movies",
+localField: "_id",
+foreignField: "_id",
+as: "filme"
+}
+},
+{
+$unwind: "$filme"
+},
+{
+$project: {
+_id: 0,
+title: "$filme.title",
+year: "$filme.year",
+quantidadeComentarios: 1,
+primeiros3Usuarios: 1
+}
+}
+]
 
 
 ])
@@ -194,22 +239,22 @@ db.movies.aggregate([
 ### Resultado Obtido
 
 **Filme 1:**
-- Título: 
-- Ano: 
-- Quantidade de comentários: 
+- Título: The Taking of Pelham 1 2 3
+- Ano: 2009
+- Quantidade de comentários: 161
 - Primeiros 3 usuários:
-  1. Nome: __________ | Email: __________
-  2. Nome: __________ | Email: __________
-  3. Nome: __________ | Email: __________
+  1. Nome: Alliser Thorne | Email: owen_teale@gameofthron.es
+  2. Nome: Amy Ramirez | Email: amy_ramirez@fakegmail.com
+  3. Nome: Amy Ramirez | Email: amy_ramirez@fakegmail.com
 
 **Filme 2:**
-- Título: 
-- Ano: 
-- Quantidade de comentários: 
+- Título: About a Boy
+- Ano: 2002
+- Quantidade de comentários: 158
 - Primeiros 3 usuários:
-  1. Nome: __________ | Email: __________
-  2. Nome: __________ | Email: __________
-  3. Nome: __________ | Email: __________
+  1. Nome: Amy Phillips | Email: amy_phillips@fakegmail.com
+  2. Nome: Anthony Cline | Email: anthony_cline@fakegmail.com
+  3. Nome: Anthony Smith | Email: anthony_smith@fakegmail.com
 
 ### Screenshot
 _[Anexar screenshot ou indicar arquivo: questao04.png]_
