@@ -177,7 +177,7 @@ O pipeline considera apenas filmes com classificação IMDb definida, utiliza $u
 ### Pipeline Utilizada
 ```javascript
 // Cole aqui sua pipeline com $lookup
-db.movies.aggregate([[
+[
 {
 $group: {
 _id: "$movie_id",
@@ -223,9 +223,6 @@ primeiros3Usuarios: 1
 }
 }
 ]
-
-
-])
 ```
 
 ### Resultado Obtido
@@ -252,7 +249,7 @@ primeiros3Usuarios: 1
 _[Anexar screenshot ou indicar arquivo: questao04.png]_
 
 ### Observações (opcional)
-
+O pipeline foi iniciado na coleção comments, agrupando os comentários por filme para calcular a quantidade total e obter os três primeiros usuários. Em seguida, foi utilizado $lookup para relacionar os resultados com a coleção movies, permitindo exibir o título e o ano de lançamento dos filmes com maior número de comentários.
 ---
 
 ## QUESTÃO 5 - Agregação com Múltiplos Estágios
